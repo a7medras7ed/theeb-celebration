@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>جدار التهاني | احتفال الذيب</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to bottom, #1e1208, #6b4a1c);
+      color: #f5e6c5;
+      text-align: center;
+      margin: 0;
+    }
+
+    /* ✨ شريط التنقل */
+    nav {
+      background: rgba(30,18,8,0.9);
+      border-bottom: 2px solid #f5d76e;
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    nav a {
+      color: #f5e6c5;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    nav a:hover { color: #ffd86f; }
+
+    /* 👑 عنوان متحرك متوهج */
+    h1 {
+      font-size: 2.6em;
+      font-weight: bold;
+      margin-top: 40px;
+      background: linear-gradient(90deg, #f5d76e, #fff5cc, #f5d76e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200%;
+      animation: shine 4s linear infinite;
+      text-shadow: 0 0 25px rgba(245,215,110,0.6);
+      letter-spacing: 2px;
+    }
+    @keyframes shine {
+      0% { background-position: 200% center; }
+      100% { background-position: 0 center; }
+    }
+
+    input, textarea {
+      width: 90%;
+      max-width: 400px;
+      padding: 10px;
+      border: 2px solid #f5d76e;
+      border-radius: 10px;
+      background: #1e1208;
+      color: #f5e6c5;
+      margin-top: 10px;
+    }
+    button {
+      background: linear-gradient(90deg, #f5d76e, #d4af37);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .greeting-card {
+      background: rgba(245,230,197,0.15);
+      border: 2px solid #f5d76e;
+      border-radius: 15px;
+      padding: 15px;
+      width: 250px;
+      margin: 10px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(245,215,110,0.3);
+    }
+
+    /* ✨ وميض الدخول */
+    #golden-flash {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(245,215,110,0.8) 10%, rgba(245,215,110,0.2) 50%, rgba(30,18,8,0.9) 90%);
+      z-index: 9999;
+      opacity: 1;
+      animation: flashFade 2.3s ease-out forwards;
+    }
+    @keyframes flashFade {
+      0% { opacity: 1; }
+      70% { opacity: 0.6; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+  </style>
+</head>
+<body>
+  <div id="golden-flash"></div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">الرئيسية</a></li>
+      <li><a href="honor.html">لوحة الشرف</a></li>
+      <li><a href="wall.html">جدار التهاني</a></li>
+      <li><a href="events.html">الفعاليات</a></li>
+    </ul>
+  </nav>
+
+  <h1>💌 جدار التهاني</h1>
+
+  <input type="text" id="name" placeholder="اسمك">
+  <textarea id="message" placeholder="اكتب تهنئتك هنا..." rows="3"></textarea>
+  <button onclick="addGreeting()">إرسال التهنئة</button>
+  <div id="greetings"></div>
+
+  <script>
+    const greetingsDiv = document.getElementById('greetings');
+    function addGreeting() {
+      const name = document.getElementById('name').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      if (!name || !msg) return alert('من فضلك اكتب الاسم والرسالة');
+      const card = document.createElement('div');
+      card.className = 'greeting-card';
+      card.innerHTML = `<h4>🎉 ${name}</h4><p>${msg}</p>`;
+      greetingsDiv.prepend(card);
+      localStorage.setItem('greetings', greetingsDiv.innerHTML);
+      document.getElementById('name').value = '';
+      document.getElementById('message').value = '';
+    }
+    greetingsDiv.innerHTML = localStorage.getItem('greetings') || '';
+    setTimeout(() => document.getElementById('golden-flash')?.remove(), 2500);
+  </script>
+</body>
+</html>
